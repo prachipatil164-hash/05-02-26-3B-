@@ -1,84 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Interactive Form Validation</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #eef2f3;
-    }
-    .container {
-      width: 400px;
-      margin: 50px auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #aaa;
-    }
-    h2 {
-      text-align: center;
-      color: #333;
-    }
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 10px;
-    }
-    input {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    .error {
-      color: red;
-      font-size: 13px;
-    }
-    .success {
-      color: green;
-      font-size: 15px;
-      text-align: center;
-      margin-top: 10px;
-    }
-    button {
-      margin-top: 15px;
-      width: 100%;
-      padding: 10px;
-      background: #3498db;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #1f618d;
-    }
-  </style>
+  <title>Form Validation (Console)</title>
 </head>
 <body>
-
-<div class="container">
   <h2>Registration Form</h2>
   <form id="regForm">
-    <label for="name">Name:</label>
-    <input type="text" id="name">
-    <div id="nameError" class="error"></div>
+    <label>Name:</label>
+    <input type="text" id="name"><br><br>
 
-    <label for="email">Email:</label>
-    <input type="text" id="email">
-    <div id="emailError" class="error"></div>
+    <label>Email:</label>
+    <input type="text" id="email"><br><br>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password">
-    <div id="passwordError" class="error"></div>
+    <label>Password:</label>
+    <input type="password" id="password"><br><br>
 
     <button type="submit">Submit</button>
-    <div id="formSuccess" class="success"></div>
   </form>
-</div>
 
-<script>
-  document.getElementById("regForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // stop form from
+  <script>
+    document.getElementById("regForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // stop form from submitting
+
+      let name = document.getElementById("name").value.trim();
+      let email = document.getElementById("email").value.trim();
+      let password = document.getElementById("password").value;
+
+      // Validation checks
+      if (name === "") {
+        console.error("Name is required.");
+      } else {
+        console.log("Name entered:", name);
+      }
+
+      let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (email === "") {
+        console.error("Email is required.");
+      } else if (!email.match(emailPattern)) {
+        console.error("Invalid email format.");
+      } else {
+        console.log("Email entered:", email);
+      }
+
+      if (password.length < 6) {
+        console.error("Password must be at least 6 characters.");
+      } else {
+        console.log("Password entered:", password);
+      }
+
+      // Final check
+      if (name && email.match(emailPattern) && password.length >= 6) {
+        console.log("✅ Form validation passed. Ready to submit!");
+      } else {
+        console.warn("⚠️ Form validation failed. Please fix errors above.");
+      }
+    });
+  </script>
+</body>
+</html>
