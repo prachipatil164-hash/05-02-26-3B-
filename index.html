@@ -1,17 +1,164 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Interactive Form Validation</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 30px;
-    }
-    form {
-      max-width: 400px;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    .form-group {
-      margin-bottom: 
+    <title>Activity Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+        }
+
+        .container {
+            width: 480px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 12px #aaa;
+        }
+
+        h2 {
+            text-align: center;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 6px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #999;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 6px;
+        }
+
+        .btn {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #1f618d;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .success {
+            color: green;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>SCHOOL / OUTDOOR ACTIVITY REGISTRATION FORM</h2>
+
+    <form id="activityForm">
+        <label>Participant Name:</label>
+        <input type="text" id="name" placeholder="Enter full name">
+        <div id="nameError" class="error"></div>
+
+        <label>Age Group:</label>
+        <select id="ageGroup">
+            <option value="">Select Age Group</option>
+            <option>Below 12</option>
+            <option>12 - 15</option>
+            <option>16 - 18</option>
+            <option>Above 18</option>
+        </select>
+        <div id="ageError" class="error"></div>
+
+        <label>Gender:</label><br>
+        <input type="radio" name="gender" value="Male"> Male
+        <input type="radio" name="gender" value="Female"> Female
+        <input type="radio" name="gender" value="Other"> Other
+        <div id="genderError" class="error"></div>
+        <br><br>
+
+        <label>Type of Activity:</label><br>
+        <input type="checkbox" name="activity" value="Sports"> Sports<br>
+        <input type="checkbox" name="activity" value="Trekking"> Trekking / Hiking<br>
+        <input type="checkbox" name="activity" value="Music"> Music<br>
+        <input type="checkbox" name="activity" value="Art"> Art<br>
+        <div id="activityError" class="error"></div>
+
+        <button type="submit" class="btn">Register</button>
+        <div id="formSuccess" class="success"></div>
+    </form>
+</div>
+
+<script>
+    document.getElementById("activityForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        let isValid = true;
+
+        // Name validation
+        let name = document.getElementById("name").value.trim();
+        if (name === "") {
+            document.getElementById("nameError").innerText = "Name is required.";
+            isValid = false;
+        } else {
+            document.getElementById("nameError").innerText = "";
+        }
+
+        // Age group validation
+        let ageGroup = document.getElementById("ageGroup").value;
+        if (ageGroup === "") {
+            document.getElementById("ageError").innerText = "Please select an age group.";
+            isValid = false;
+        } else {
+            document.getElementById("ageError").innerText = "";
+        }
+
+        // Gender validation
+        let genderSelected = document.querySelector('input[name="gender"]:checked');
+        if (!genderSelected) {
+            document.getElementById("genderError").innerText = "Please select your gender.";
+            isValid = false;
+        } else {
+            document.getElementById("genderError").innerText = "";
+        }
+
+        // Activity validation
+        let activities = document.querySelectorAll('input[name="activity"]:checked');
+        if (activities.length === 0) {
+            document.getElementById("activityError").innerText = "Please select at least one activity.";
+            isValid = false;
+        } else {
+            document.getElementById("activityError").innerText = "";
+        }
+
+        // Success message
+        if (isValid) {
+            document.getElementById("formSuccess").innerText = "🎉 Registration successful!";
+        } else {
+            document.getElementById("formSuccess").innerText = "";
+        }
+    });
+</script>
+
+</body>
+</html>
